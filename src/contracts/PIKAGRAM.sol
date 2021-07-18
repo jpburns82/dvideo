@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-contract DVideo {
+contract PIKAGRAM {
   uint public videoCount = 0;
-  string public name = "DVideo";
+  string public name = "PIKAGRAM";
   mapping(uint => Video) public videos;
 
   struct Video {

@@ -1,5 +1,5 @@
-const DVideo = artifacts.require("DVideo");
+const PIKAGRAM = artifacts.require("PIKAGRAM");
 
 module.exports = function(deployer) {
-  deployer.deploy(DVideo);
+  deployer.deploy(PIKAGRAM);
 };

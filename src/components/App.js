@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DVideo from '../abis/DVideo.json'
+import PIKAGRAM from '../abis/PIKAGRAM.json'
 import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
@@ -36,30 +36,30 @@ class App extends Component {
     this.setState({ account: accounts[0] })
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = DVideo.networks[networkId]
+    const networkData = PIKAGRAM.networks[networkId]
     if(networkData) {
-      const dvideo = new web3.eth.Contract(DVideo.abi, networkData.address)
-      this.setState({ dvideo })
-      const videosCount = await dvideo.methods.videoCount().call()
+      const pikagram = new web3.eth.Contract(PIKAGRAM.abi, networkData.address)
+      this.setState({ pikagram })
+      const videosCount = await pikagram.methods.videoCount().call()
       this.setState({ videosCount })
 
       // Load videos, sort by newest
       for (var i=videosCount; i>=1; i--) {
-        const video = await dvideo.methods.videos(i).call()
+        const video = await pikagram.methods.videos(i).call()
         this.setState({
           videos: [...this.state.videos, video]
         })
       }
 
       //Set latest video with title to view as default 
-      const latest = await dvideo.methods.videos(videosCount).call()
+      const latest = await pikagram.methods.videos(videosCount).call()
       this.setState({
         currentHash: latest.hash,
         currentTitle: latest.title
       })
       this.setState({ loading: false})
     } else {
-      window.alert('DVideo contract not deployed to detected network.')
+      window.alert('PIKAGRAM contract not deployed to detected network.')
     }
   }
 
@@ -88,7 +88,7 @@ class App extends Component {
       }
 
       this.setState({ loading: true })
-      this.state.dvideo.methods.uploadVideo(result[0].hash, title).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.pikagram.methods.uploadVideo(result[0].hash, title).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
     })
